@@ -14,7 +14,7 @@ import "encoding/json"
 var db *sql.DB //to share with our handlers
 
 func SafeValues(v *url.Values) bool {
-	log.Printf("%+v", &v)
+	log.Printf("safe %+v", v)
 	//lat, lon, acc are floats, label is string safe for db insert
 	return true //for now
 }
@@ -36,6 +36,7 @@ func LocationHandler(w http.ResponseWriter, req *http.Request) {
 			log.Println(values)
 			if SafeValues(&values) {
 				q := buildQuery(&values)
+				log.Println("query:", q)
 				rows, err := db.Query(q)
 				if err != nil {
 					log.Print("db error",err)
@@ -46,7 +47,7 @@ func LocationHandler(w http.ResponseWriter, req *http.Request) {
 					rows.Scan(&name)
 					l = append(l, name)
 				}
-				//w.Header().Set("Content-Type", "application/json")
+
 				m := make(map[string][]string)
 				m["names"] = l
 				j, err := json.Marshal(m)
