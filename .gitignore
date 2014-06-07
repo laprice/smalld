@@ -1,0 +1,5 @@
+*~
+.credentials
+src/
+bin/
+pkg/
