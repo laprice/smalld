@@ -12,10 +12,10 @@ SET default_with_oids = false;
 CREATE TABLE adminareas (
     gid integer,
     osm_id character varying(20),
-    name character varying(100),
+    name character varying(100)
 );
 --using AddGeometryColumn since drone.io has stale postgis
-select AddGeometryColumn('adminareas','geom', 4326, 'MultiPolygon', 2);
+select AddGeometryColumn('public','adminareas','geom', 4326, 'MULTIPOLYGON', 2);
 
 
 --
