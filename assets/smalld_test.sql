@@ -13,8 +13,9 @@ CREATE TABLE adminareas (
     gid integer,
     osm_id character varying(20),
     name character varying(100),
-    geom geometry(MultiPolygon,4326)
 );
+--using AddGeometryColumn since drone.io has stale postgis
+select AddGeometryColumn('adminareas','geom', 4326, 'MultiPolygon', 2);
 
 
 --
