@@ -30,6 +30,16 @@ func TestLocationHandlerResponseQuery(t *testing.T) {
 	log.Println(response)
 }
 
+func TestEventsHandlerResponseOK(t *testing.T) {
+	response := httptest.NewRecorder()
+	request, _ := http.NewRequest("GET", "/events", nil)
+	EventsHandler(response, request)
+	log.Printn("/events response", response.Code)
+	if response.Code != http.StatusOK {
+		t.Fatalf("Bad Response")
+	}
+}
+
 func init() {
 	log.Println("smalld testing")
 	db_connection := os.Getenv("SMALLD_DB_CONNECTION")
