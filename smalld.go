@@ -65,6 +65,10 @@ func LocationHandler(w http.ResponseWriter, req *http.Request) {
 	}
 }
 
+func EventsHandler(w http.ResponseWriter, req *http.Request) {
+
+}
+
 func main() {
 	log.Println("smalld starting")
 	db_connection := os.Getenv("SMALLD_DB_CONNECTION")
