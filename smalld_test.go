@@ -34,7 +34,7 @@ func TestEventsHandlerResponseOK(t *testing.T) {
 	response := httptest.NewRecorder()
 	request, _ := http.NewRequest("GET", "/events", nil)
 	EventsHandler(response, request)
-	log.Printn("/events response", response.Code)
+	log.Println("/events response", response.Code)
 	if response.Code != http.StatusOK {
 		t.Fatalf("Bad Response")
 	}
