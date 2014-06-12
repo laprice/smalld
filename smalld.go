@@ -66,7 +66,10 @@ func LocationHandler(w http.ResponseWriter, req *http.Request) {
 }
 
 func EventsHandler(w http.ResponseWriter, req *http.Request) {
-
+	log.Println("handling /events request")
+	if req.Method != "GET" {
+		//die horribly with an error
+	}
 }
 
 func main() {
