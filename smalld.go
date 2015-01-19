@@ -69,6 +69,7 @@ func EventsHandler(w http.ResponseWriter, req *http.Request) {
 	log.Println("handling /events request")
 	if req.Method != "GET" {
 		//die horribly with an error
+		
 	}
 }
 
@@ -89,5 +90,5 @@ func main() {
 	log.Println("connected to database")
 	http.HandleFunc("/location", LocationHandler)
 	log.Println("registered LocationHandler")
-	http.ListenAndServe(":8000", nil)
+ 	http.ListenAndServe(":8000", nil)
 }
