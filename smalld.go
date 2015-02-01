@@ -36,7 +36,8 @@ func LocationHandler(w http.ResponseWriter, req *http.Request) {
 			if SafeValues(&values) {
 				p := makePoint(&values)
 				log.Println("point:", p)
-				rows, err := db.Query("select name from adminareas where st_contains(adminareas.geom, st_geomfromtext( $1 , 4326))", p )
+				q := "select name from adminareas where st_contains(adminareas.geom, st_geomfromtext( $1 , 4326))"
+				rows, err := db.Query(q, p )
 				if err != nil {
 					log.Print("db error",err)
 				}
