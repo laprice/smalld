@@ -1,0 +1,5 @@
+#notes
+
+This file is notes of what I learned about Go while working on this project.
+
+pq uses postgresql ordinal markers ( $1, $2 ... $n ) http://godoc.org/github.com/lib/pq#hdr-Queries
