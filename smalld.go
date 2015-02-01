@@ -19,10 +19,9 @@ func SafeValues(v *url.Values) bool {
 	return true //for now
 }
 
-func buildQuery(v *url.Values) (string) {
+func makePoint(v *url.Values) (string) {
 	point := fmt.Sprintf("POINT(%s %s)", v.Get("lon"), v.Get("lat"))
-	query := fmt.Sprintf("select name from adminareas where st_contains(adminareas.geom, st_geomfromtext('%s', 4326));", point)
-	return query
+	return point
 }
 
 func LocationHandler(w http.ResponseWriter, req *http.Request) {
@@ -35,9 +34,9 @@ func LocationHandler(w http.ResponseWriter, req *http.Request) {
 			}
 			log.Println(values)
 			if SafeValues(&values) {
-				q := buildQuery(&values)
-				log.Println("query:", q)
-				rows, err := db.Query(q)
+				p := makePoint(&values)
+				log.Println("point:", p)
+				rows, err := db.Query("select name from adminareas where st_contains(adminareas.geom, st_geomfromtext( $1 , 4326))", p )
 				if err != nil {
 					log.Print("db error",err)
 				}
