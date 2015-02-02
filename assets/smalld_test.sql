@@ -17,6 +17,12 @@ CREATE TABLE adminareas (
 --using AddGeometryColumn since drone.io has stale postgis
 select AddGeometryColumn('public','adminareas','geom', 4326, 'MULTIPOLYGON', 2);
 
+create table locations ( 
+       id serial primary key,
+       label text,
+       acc numeric );
+select AddGeometryColumn ( 'locations', 'geom', 4326, 'POINT', 2);
+
 
 --
 -- Data for Name: counties; Type: TABLE DATA; Schema: public; Owner: -
