@@ -3,6 +3,7 @@ package main
 import "os"
 import "log"
 import "fmt"
+import "strconv"
 import ( 
 	_ "github.com/lib/pq"
 	"database/sql"
@@ -15,7 +16,6 @@ var db *sql.DB //to share with our handlers
 
 func SafeValues(v *url.Values) bool {
 	log.Printf("safe %+v", v)
-	//lat, lon, acc are floats, label is string safe for db insert
 	return true //for now
 }
 
@@ -55,6 +55,23 @@ func LocationHandler(w http.ResponseWriter, req *http.Request) {
 					log.Fatal(err)
 				}
 				w.Write(j)
+				txn, err := db.Begin()
+				if err != nil {
+					log.Fatal(err)
+				}
+				label := fmt.Sprintf("%s", values.Get("label"))
+				acc, err := strconv.ParseInt(values.Get("acc"), 10, 0)
+				if err != nil {
+					log.Fatal(err)
+				}
+				rows, err = db.Query( "insert into locations ( label, acc, geom ) values ( $1, $2, ST_PointFromText( $3, 4326) )", label, acc, p )
+				if err != nil {
+					log.Fatal(err)
+				}
+				err = txn.Commit()
+				if err != nil {
+					log.Fatal(err)
+				}
 				return
 			}
 		} else {
