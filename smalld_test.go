@@ -4,6 +4,7 @@ import "os"
 import "log"
 import "testing"
 import "net/http"
+import "net/url"
 import "net/http/httptest"
 import ( 
 	_ "github.com/lib/pq"
@@ -30,7 +31,13 @@ func TestLocationHandlerResponseQuery(t *testing.T) {
 	log.Println(response)
 }
 
-func TestLocationHandlerrecordlocations(t *testing.T) {
+func Testrecordlocations(t *testing.T) {
+	values := url.Values{}
+	values.Set("acc", "5")
+	values.Set("lat", "44.09491559960329")
+	values.Set("lon", "-123.0965916720434")
+	values.Set("label", "foo")
+	recordlocations(&values)
 	query := "select label, acc, st_y(geom) lat, st_x(geom) lon from locations where label='foo' limit 1"
 	var result Location
 	err := db.QueryRow(query).Scan(&result.label, &result.acc,&result.lat,&result.lon)
@@ -66,3 +73,8 @@ func init() {
 	} 
 	log.Println("connected to database")
 }
+
+// func TestMain(m *testing.M) { 
+
+// 	os.Exit(m.Run())
+// }
