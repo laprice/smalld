@@ -13,6 +13,8 @@ RUN locale-gen en_US.UTF-8 && dpkg-reconfigure locales
 
 ENV GOROOT=/usr/src/go/
 
-RUN git clone https://github.com/laprice/smalld.git $GOROOT/src/github.com/laprice/ \
-     && cd $GOROOT/src/github.com/laprice/smalld && make 
+RUN CGO_ENABLED=0 go get -a -ldflags '-s' github.com/laprice/smalld/
+RUN cp /gopath/src/github.com/laprice/smalld/build/Dockerfile /gopath
+CMD docker build -t laprice/smalld gopath
+
 
