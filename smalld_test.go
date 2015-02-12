@@ -30,6 +30,17 @@ func TestLocationHandlerResponseQuery(t *testing.T) {
 	log.Println(response)
 }
 
+func TestLocationHandlerrecordlocations(t *testing.T) {
+	query := "select label, acc, st_y(geom) lat, st_x(geom) lon from locations where label='foo'"
+	result, err := db.Query(query)
+	if err != nil {
+		t.Fatalf("could not talk to database")
+	}
+	if result.label != 'foo' { t.Fatalf("label inserted does not match") }
+	if result.acc != 5 { t.Fatalf("acc inserted does not match") }
+	log.Println(result)
+}
+
 func init() {
 	log.Println("smalld testing")
 	db_connection := os.Getenv("SMALLD_DB_CONNECTION")
