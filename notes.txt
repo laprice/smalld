@@ -8,3 +8,4 @@ strconv to do back and forth conversions of strings and nativetypes.
 
 pq can only use native types.
 
+Use txn.Exec when doing something that doesn't need any values returned; using txn.Query will result in errors when you commit the txn.
