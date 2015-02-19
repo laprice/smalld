@@ -35,7 +35,7 @@ func recordlocations(v *url.Values) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	rslt, err := txn.Exec("insert into locations ( label, acc, geom ) values ( $1, $2, ST_PointFromText( $3, 4326) )", label, acc, p)
+	_, err = txn.Exec("insert into locations ( label, acc, geom ) values ( $1, $2, ST_PointFromText( $3, 4326) )", label, acc, p)
 	if err != nil {
 		log.Fatal(err)
 	}
