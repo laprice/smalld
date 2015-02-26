@@ -91,9 +91,11 @@ func main() {
 	log.Println("smalld starting")
 	db_connection := os.Getenv("SMALLD_DB_CONNECTION")
 	url_base := os.Getenv("SMALLD_URL_BASE")
+	listen_address :=os.Getenv("SMALLD_LISTEN_ADDRESS")
 	options := os.Getenv("SMALLD_OPTIONS") //override command line flags
 	log.Println("SMALLD_DB_CONNECTION:", db_connection)
 	log.Println("SMALLD_URL_BASE:", url_base)
+	log.Println("SMALLD_LISTEN_ADDRESS")
 	log.Println("SMALLD_OPTIONS:", options)
 	var err error
 	db, err = sql.Open("postgres", db_connection)
@@ -104,5 +106,5 @@ func main() {
 	log.Println("connected to database")
 	http.HandleFunc("/location", LocationHandler)
 	log.Println("registered LocationHandler")
-	http.ListenAndServe(":8000", nil)
+	http.ListenAndServe(listen_address, nil)
 }
