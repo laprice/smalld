@@ -95,7 +95,7 @@ func main() {
 	options := os.Getenv("SMALLD_OPTIONS") //override command line flags
 	log.Println("SMALLD_DB_CONNECTION:", db_connection)
 	log.Println("SMALLD_URL_BASE:", url_base)
-	log.Println("SMALLD_LISTEN_ADDRESS")
+	log.Println("SMALLD_LISTEN_ADDRESS", listen_address)
 	log.Println("SMALLD_OPTIONS:", options)
 	var err error
 	db, err = sql.Open("postgres", db_connection)
