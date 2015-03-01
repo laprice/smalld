@@ -76,6 +76,7 @@ func LocationHandler(w http.ResponseWriter, req *http.Request) {
 				if err != nil {
 					log.Fatal(err)
 				}
+				w.Header.Add("Access-Control-Allow-Origin", "*")
 				w.Write(j)
 				return
 			}
