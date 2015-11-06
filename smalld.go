@@ -14,7 +14,7 @@ import "encoding/json"
 
 var db *sql.DB //to share with our handlers
 
-func SafeValues(v *url.Values) bool {
+func safeValues(v *url.Values) bool {
 	log.Printf("safe %+v", v)
 	return true //for now
 }
@@ -45,6 +45,9 @@ func recordlocations(v *url.Values) {
 	}
 }
 
+// LocationHandler is the main entry point for smalld 
+// it receives the get request parses the location data from it
+// and logs the values to the location table.
 func LocationHandler(w http.ResponseWriter, req *http.Request) {
 	log.Println("handling url", req.URL)
 	if req.Method == "GET" {
@@ -91,16 +94,16 @@ func LocationHandler(w http.ResponseWriter, req *http.Request) {
 
 func main() {
 	log.Println("smalld starting")
-	db_connection := os.Getenv("SMALLD_DB_CONNECTION")
-	url_base := os.Getenv("SMALLD_URL_BASE")
-	listen_address :=os.Getenv("SMALLD_LISTEN_ADDRESS")
+	dbCconnection := os.Getenv("SMALLD_DB_CONNECTION")
+	urlBase := os.Getenv("SMALLD_URL_BASE")
+	listenAddress := os.Getenv("SMALLD_LISTEN_ADDRESS")
 	options := os.Getenv("SMALLD_OPTIONS") //override command line flags
-	log.Println("SMALLD_DB_CONNECTION:", db_connection)
-	log.Println("SMALLD_URL_BASE:", url_base)
-	log.Println("SMALLD_LISTEN_ADDRESS", listen_address)
+	log.Println("SMALLD_DB_CONNECTION:", dbConnection)
+	log.Println("SMALLD_URL_BASE:", urlBase)
+	log.Println("SMALLD_LISTEN_ADDRESS", listenAddress)
 	log.Println("SMALLD_OPTIONS:", options)
 	var err error
-	db, err = sql.Open("postgres", db_connection)
+	db, err = sql.Open("postgres", dbConnection)
 	err = db.Ping()
 	if err != nil {
 		log.Fatal(err)
@@ -108,5 +111,5 @@ func main() {
 	log.Println("connected to database")
 	http.HandleFunc("/location", LocationHandler)
 	log.Println("registered LocationHandler")
-	http.ListenAndServe(listen_address, nil)
+	http.ListenAndServe(listenAddress, nil)
 }
