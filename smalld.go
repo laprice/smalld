@@ -45,7 +45,7 @@ func recordlocations(v *url.Values) {
 	}
 }
 
-// LocationHandler is the main entry point for smalld 
+// LocationHandler is the main entry point for smalld
 // it receives the get request parses the location data from it
 // and logs the values to the location table.
 func LocationHandler(w http.ResponseWriter, req *http.Request) {
