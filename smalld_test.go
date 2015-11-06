@@ -6,9 +6,9 @@ import "testing"
 import "net/http"
 import "net/url"
 import "net/http/httptest"
-import ( 
-	_ "github.com/lib/pq"
+import (
 	"database/sql"
+	_ "github.com/lib/pq"
 )
 
 func TestLocationHandlerResponseOK(t *testing.T) {
@@ -40,28 +40,32 @@ func Testrecordlocations(t *testing.T) {
 	recordlocations(&values)
 	query := "select label, acc, st_y(geom) lat, st_x(geom) lon from locations where label='foo' limit 1"
 	var result Location
-	err := db.QueryRow(query).Scan(&result.label, &result.acc,&result.lat,&result.lon)
+	err := db.QueryRow(query).Scan(&result.label, &result.acc, &result.lat, &result.lon)
 	if err != nil {
 		log.Println(err)
 		t.Fatalf("could not talk to database")
 	}
-	if result.label != "foo" { t.Fatalf("label inserted does not match") }
-	if result.acc != 5 { t.Fatalf("acc inserted does not match") }
+	if result.label != "foo" {
+		t.Fatalf("label inserted does not match")
+	}
+	if result.acc != 5 {
+		t.Fatalf("acc inserted does not match")
+	}
 	log.Println(result)
 }
 
 type Location struct {
 	label string
-	lat float64
-	lon float64
-	acc float64
-	}
+	lat   float64
+	lon   float64
+	acc   float64
+}
 
 func init() {
 	log.Println("smalld testing")
 	dbConnection := os.Getenv("SMALLD_DB_CONNECTION")
 	urlBase := os.Getenv("SMALLD_URL_BASE")
-	options := os.Getenv("SMALLD_OPTIONS") //override command line flags 
+	options := os.Getenv("SMALLD_OPTIONS") //override command line flags
 	log.Println("SMALLD_DB_CONNECTION:", dbConnection)
 	log.Println("SMALLD_URL_BASE:", urlBase)
 	log.Println("SMALLD_OPTIONS:", options)
@@ -70,6 +74,6 @@ func init() {
 	err = db.Ping()
 	if err != nil {
 		log.Fatal(err)
-	} 
+	}
 	log.Println("connected to database")
 }
