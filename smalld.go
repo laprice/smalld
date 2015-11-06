@@ -57,7 +57,7 @@ func LocationHandler(w http.ResponseWriter, req *http.Request) {
 				log.Fatal(err)
 			}
 			log.Println(values)
-			if SafeValues(&values) {
+			if safeValues(&values) {
 				p := makePoint(&values)
 				go recordlocations(&values)
 				log.Println("point:", p)
@@ -94,7 +94,7 @@ func LocationHandler(w http.ResponseWriter, req *http.Request) {
 
 func main() {
 	log.Println("smalld starting")
-	dbCconnection := os.Getenv("SMALLD_DB_CONNECTION")
+	dbConnection := os.Getenv("SMALLD_DB_CONNECTION")
 	urlBase := os.Getenv("SMALLD_URL_BASE")
 	listenAddress := os.Getenv("SMALLD_LISTEN_ADDRESS")
 	options := os.Getenv("SMALLD_OPTIONS") //override command line flags
