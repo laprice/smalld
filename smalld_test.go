@@ -59,22 +59,17 @@ type Location struct {
 
 func init() {
 	log.Println("smalld testing")
-	db_connection := os.Getenv("SMALLD_DB_CONNECTION")
-	url_base := os.Getenv("SMALLD_URL_BASE")
+	dbConnection := os.Getenv("SMALLD_DB_CONNECTION")
+	urlBase := os.Getenv("SMALLD_URL_BASE")
 	options := os.Getenv("SMALLD_OPTIONS") //override command line flags 
-	log.Println("SMALLD_DB_CONNECTION:", db_connection)
-	log.Println("SMALLD_URL_BASE:", url_base)
+	log.Println("SMALLD_DB_CONNECTION:", dbConnection)
+	log.Println("SMALLD_URL_BASE:", urlBase)
 	log.Println("SMALLD_OPTIONS:", options)
 	var err error
-	db, err = sql.Open("postgres", db_connection)
+	db, err = sql.Open("postgres", dbConnection)
 	err = db.Ping()
 	if err != nil {
 		log.Fatal(err)
 	} 
 	log.Println("connected to database")
 }
-
-// func TestMain(m *testing.M) { 
-
-// 	os.Exit(m.Run())
-// }
